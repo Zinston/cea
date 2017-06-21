@@ -1,0 +1,23 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+		<h1>Plainte #{{plainte.numero}}</h1>
+		{% if plainte.date_de_classement %}
+		<p class="lead">Classée le {{plainte.date_de_classement.strftime("%d/%m/%Y")}}.</p>
+		{% elif plainte.date_de_reception %}
+		<p class="lead">Reçue le {{plainte.date_de_reception.strftime("%d/%m/%Y")}}.</p>
+		{% endif %}
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block content %}
+  {{plainte.render(i = 0) | safe}}
+  <br>
+  <br>
+  <form method="post">
+  	<input type="submit" name="modifier" value="Modifier">
+  	<input type="submit" name="supprimer" value="Supprimer">
+  </form>
+{% endblock %}

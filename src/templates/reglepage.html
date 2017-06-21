@@ -1,0 +1,17 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+		<h1>Règle #{{r.nr}}</h1>
+		<p class="lead">Encodée le {{r.date.strftime("%d/%m/%Y")}}.</p>
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block communication %}
+{{commu}}
+{% endblock %}
+
+{% block content %}
+  {{r.render() | safe}}
+{% endblock %}

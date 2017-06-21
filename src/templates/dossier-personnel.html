@@ -1,0 +1,24 @@
+{% if to_print %}
+	{% extends "toprint.html" %}
+{% else %}
+	{% extends "cea-base.html" %}
+{% endif %}
+
+{% block titre %}
+	Dossier de litiges de  {{nom}}
+{% endblock %}
+
+{% block jumbotron %}
+
+		<h1>Dossier de litiges de {{nom}}</h1>
+
+{% endblock %}
+
+{% block content %}
+
+  {% for p in plaintes_lst %}
+    {{ p.render() | safe }}
+    <br><br>
+  {% endfor %}
+
+{% endblock %}

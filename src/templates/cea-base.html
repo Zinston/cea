@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>Ecole Autonome</title>
+  	
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet" media="screen">
+    
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="150">
+
+<div id="commu">
+	{% block communication %}{% endblock %}	<a id="close"><img src = "/images/close.png" class="pull-right"></img></a>
+</div>
+	
+		<!--navigation bar-->
+	<nav class="navbar navbar-default transparent navbar-fixed-top" role="navigation" id="navbar-main">
+    	<div class="container">
+        	<div class="navbar-header">
+            	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+                	<span class="sr-only">Toggle Navigation</span>
+	                <span class="fa fa-chevron-down"></span> <b>Menu</b>
+    	        </button>
+        	    <a class="navbar-brand" href="#"><img src="/images/newlogo.png" class="navbar-brand"></a>
+	        </div>
+    	    <div class="collapse navbar-collapse" id="navCollapse">
+        	    <ul class="nav nav-pills pull-right">
+    				<li class="dropdown">
+        				<a class="dropdown-toggle" data-toggle="dropdown" href="#">Documents
+       						<span class="caret"></span>
+       					</a>
+        				<ul class="dropdown-menu">
+          					<li><a href="http://docs.ecole-autonome.be/recueil_de_regles_internes.pdf" target="_blank">Recueil de règles internes</a></li>
+          					<li><a href="http://docs.ecole-autonome.be/preposesducea.pdf" target="_blank">Préposés du CEA</a></li>
+		    				<li><a href="http://docs.ecole-autonome.be/manman/Manuel_de_Gestion.pdf" target="_blank">Manuel de gestion</a></li>
+        				</ul>
+      				</li>
+		  		</ul>
+	        </div>
+    	</div>
+	</nav>
+
+  		<div class="container"><div class="jumbotron">
+    		<div id="content">
+  					{% block jumbotron %}
+  					{% endblock %}
+  					<br/><br/>
+  					<p align="center"><a href="/nouvelleplainte"><img src="/images/add.png"></a>
+  					&nbsp;&nbsp;&nbsp;&nbsp;
+  					<a href="/encours"><img src="/images/workinprogress.png" hspace="10"></a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+  					<a href="/recherche"><img src="/images/search.png"></a></p>
+  			</div>
+  		</div></div>
+
+			<div class="container" data-center="background-position: 50% 0px;" data-top-bottom="background-position: 50% -100px;">
+  			{% block content %}
+  			{% endblock %}
+  			</div>
+  		
+  		<br />
+  		<div class="footer">
+  			<p>&nbsp;&copy; Antoine Guenet 2016-2017</p>
+		</div>
+  
+  	
+    	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/modernizr.custom.80028.js"></script>
+		<script src="/js/script.js"></script>
+	</body>
+</html>

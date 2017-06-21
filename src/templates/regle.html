@@ -1,0 +1,13 @@
+<div class="plainte">
+	<div class="plainte-heading">
+		<div class="plainte-numero">
+			{{r.nr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{r.titre}}
+		</div>
+		<div class="plainte-date_de_classement">Encodée le {{r.date.strftime("%d/%m/%Y")}}</div>
+	</div>
+	<div class="plainte-rapport">
+		{% for line in r.regletxt.splitlines() %}
+    		{{line}}<br>
+		{% endfor %}
+	</div>
+</div>

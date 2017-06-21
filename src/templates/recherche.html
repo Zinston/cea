@@ -1,0 +1,61 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+		<h1>Recherche</h1>
+		<p class="lead">Faites une recherche parmi les plaintes encodées au cours de cette année scolaire.</p>
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block communication %}
+{{commu}}
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="post">
+  		<label>
+  			<div>Par numéro : 
+  			<select name="numsearch">
+  				<option value=""></option>
+  				{% for num in num_lst %}
+  					<option value="{{num}}">{{num}}</option>
+  				{% endfor %}
+  			</select></div>
+  		</label>
+  		<br>
+  		
+  		<label>
+  			<div>Par nom : 
+  			<select name="namesearch">
+  				<option value=""></option>
+  				{% for membre in membres_lst %}
+  					<option value="{{membre}}">{{membre}}</option>
+  				{% endfor %}
+  			</select></div>
+  		</label>
+  		<br>
+  		
+  		<label>
+  			<div>Par règle :
+  			<select name="rulesearch">
+  				<option value=""></option>
+  				{% for regle in regles %}
+  					<option value="{{regle.nr}}">{{regle.nr}}{% if regle.nr|length <=3 %}&nbsp;{% endif %}{% if regle.nr|length <=2 %}&nbsp;{% endif %}{% if regle.nr|length ==1 %}&nbsp;{% endif %}&nbsp;&nbsp;&nbsp;{{regle.titre}}</option>
+  				{% endfor %}
+  			</select></div>
+  		</label>
+  		<br>
+  		
+  		<label>
+  			<input type="checkbox" name="presenter"> Ce qui est à présenter au CE</input><br>
+  			<input type="checkbox" name="toprint"> Pour impression</input>
+  		</label>
+  		<br>
+			
+		<input type="submit" value="Rechercher" />
+	</form>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+		<h1>Travail en cours</h1>
+		<p class="lead">Les plaintes suivantes sont ouvertes.</p>
+
+{% endblock %}
+
+{% block content %}
+
+  <form method="post">
+  	
+  {% for p in plaintes_lst %}
+  	{% set i = loop.index0 %}
+    {{ p.render(to_print, i, en_cours) | safe }}
+  	<br><br>
+  {% endfor %}
+  <input type="submit" value="Traiter" />
+{% endblock %}

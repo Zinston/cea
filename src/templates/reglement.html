@@ -1,0 +1,17 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+	<h1>Recueil de règles internes</h1>
+		<p class="lead">Ici sont compilées toutes les règles du Conseil d'école encodées dans la base de données.</p>
+
+{% endblock %}
+
+{% block content %}
+
+  {% for r in regles %}
+    {{ r.render() | safe }}
+    <br><br>
+  {% endfor %}
+
+{% endblock %}

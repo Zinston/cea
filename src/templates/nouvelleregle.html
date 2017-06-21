@@ -1,0 +1,38 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+	<h1>Nouvelle règle</h1>
+	<p class="lead">Encodez ici une nouvelle règle.</p>
+{% endblock %}
+
+{% block communication %}
+{{commu}}
+{% endblock %}
+
+{% block content %}
+
+    <form method="post">
+		<label>
+			<div>Numero</div>
+			<input type="string" name="nr" onkeyup="validNumber(this)" onblur="validNumber(this)"></input>
+		</label>
+		<br>
+		
+		<label>
+			<div>Titre</div>
+			<input type="string" name="titre" onkeyup="valid(this)" onblur="valid(this)"></input>
+		</label>
+		<br>
+		
+		<label>
+			<div>Règle</div>
+			<textarea name="regletxt" onkeyup="valid(this)" onblur="valid(this)"></textarea>
+		</label>
+		<br>
+		
+		<div class="error">{{error}}</div>
+		
+		<input type="submit" name="sauver" value="Sauver">
+	
+	</form>
+{% endblock %}

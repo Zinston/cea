@@ -1,0 +1,28 @@
+{% if to_print %}
+	{% extends "toprint.html" %}
+{% else %}
+	{% extends "cea-base.html" %}
+{% endif %}
+
+{% block titre %}
+	Casebook : {{regle.nr}} {{regle.titre}}
+{% endblock %}
+
+{% block jumbotron %}
+
+		<h1>{{regle.nr}} {{regle.titre}}</h1>
+		<p class="lead">Les cas classés d'infraction à cette règle.</p>
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block content %}
+	{{ regle.render() | safe }}
+    <br><br>
+
+  {% for p in plaintes_lst %}
+    {{ p.render() | safe }}
+    <br><br>
+  {% endfor %}
+
+{% endblock %}

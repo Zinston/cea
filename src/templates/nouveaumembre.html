@@ -1,0 +1,34 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+
+		<h1>Nouveau membre</h1>
+		<p class="lead">Ajoutez ici un nouveau membre au Conseil d'école.</p>
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block communication %}
+{{commu}}
+{% endblock %}
+
+{% block content %}
+  	<form method="post">
+    
+			<label>
+				<div>Prénom</div>
+				<input type="string" name="prenom">{{prenom}}</input>
+			</label>
+			<br>
+			
+			<label>
+				<div>Nom</div>
+				<input type="string" name="nom">{{nom}}</input>
+			</label>
+			<br>
+			
+			<div class="error">{{error}}</div>
+			
+			<input type="submit" />
+		</form>
+{% endblock %}

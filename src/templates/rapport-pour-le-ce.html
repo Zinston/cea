@@ -1,0 +1,47 @@
+{% if to_print == -1 %}
+	{% extends "cea-base.html" %}
+{% else %}
+	{% extends "toprint.html" %}
+{% endif %}
+
+{% block titre %}
+	Rapport des affaires du Comité d'Enquête et d'Arbitrage 
+	{% if pold and precent %} 
+		du {{pold.date_de_classement.strftime("%d/%m/%Y")}} au {{precent.date_de_classement.strftime("%d/%m/%Y")}} 
+	{% endif %}
+{% endblock %}
+
+{% block jumbotron %}
+	<h1>Rapport des affaires du Comité d'Enquête et d'Arbitrage</h1>
+	<p class="lead">Rapport pour examination et approbation par le Conseil d'école.<br>
+	{% if pold and precent %} 
+		Du {{pold.date_de_classement.strftime("%d/%m/%Y")}} au {{precent.date_de_classement.strftime("%d/%m/%Y")}}.
+	{% endif %}
+	</p>
+    <!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+{% endblock %}
+
+{% block content %}
+
+  {% if to_print == -1 %}
+  	<a href="/rapportpourlece?toprint=1" target="_blank"><span class="glyphicon glyphicon-print" style="color:#1BE19C;"></a>
+  	<br>
+  	<form method="post">
+  {% endif %}
+  	
+  {% for p in plaintes_lst %}
+  	{% set i = loop.index0 %}
+  	{% if to_print == -1 %}
+  		<input type="hidden" name="plaintenr{{i}}" value="{{p.numero}}" />
+  	{% endif %}
+   		{{ p.render(to_print, i) | safe }}
+    	<br><br>
+  {% endfor %}
+  
+  	{% if to_print == -1 %}
+  		<input type="submit" value="Présenter les plaintes sélectionnées au CE">
+  	
+  	</form>
+  	{% endif %}
+
+{% endblock %}

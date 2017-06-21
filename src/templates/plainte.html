@@ -1,0 +1,81 @@
+<div class="plainte">
+	<div class="plainte-heading">
+		<div class="plainte-numero">
+			{% if en_cours %}
+			<input type="radio" name="plaintenum" value="{{p.numero}}">
+			{% endif %}
+			{{p.numero}}
+		</div>
+		{% if p.date_de_classement %}
+		<div class="plainte-date_de_classement">Plainte classée le {{p.date_de_classement.strftime("%d/%m/%Y")}}</div>
+		{% else %}
+		<div class="plainte-date_de_classement">Travail en cours depuis le {{p.date_de_reception.strftime("%d/%m/%Y")}}</div>
+		{% endif %}
+	</div>
+	<div class="plainte-rapport">
+		<b>Rapport du CEA :</b><br>
+			{% for line in p.rapport.splitlines() %}
+    			{{line}}<br>
+			{% endfor %}
+	</div><br>
+			{% if p.accuse and p.accuse != "-" %}
+					
+				{% set accuse_lst = p.accuse.split("|") %}
+					{% for nom in accuse_lst %}
+						
+						{% if p.accusation %}{% set accusation_lst = p.accusation.split("|") %}{% endif %}
+						{% if p.declaration %}{% set declaration_lst = p.declaration.split("|") %}{% endif %}
+						{% if p.sanction %}{% set sanction_lst = p.sanction.split("|") %}{% endif %}
+					
+    					<div class="plainte-examen">
+    							<u>Personne mise en examen</u> : {{nom}}<br>
+    							{% if p.accusation %}
+    							<u>Chefs d'accusation</u> : 
+    								{% set acc_lst = accusation_lst[loop.index0].split("£") %}
+    								{% for n in acc_lst %}
+    									<div id="accnr{{i}}-{{nom}}-{{n}}" style="display: inline;">{{n}}</div>
+    									<div id="acctitlebox{{i}}-{{nom}}-{{n}}" style="display: inline;"></div><br>
+    								{% endfor %}
+    							{% endif %}
+    							{% if p.declaration %}
+	    						<u>Déclaration</u> : {{declaration_lst[loop.index0]}}<br>
+	    						{% endif %}
+	    						{% if p.sanction %}
+    							<u>Sanction</u> : 
+    								{% for line in sanction_lst[loop.index0].splitlines() %}
+    									{{line}}<br>
+									{% endfor %}
+								{% endif %}
+    					</div><br>
+					{% endfor %}
+				{% endif %}
+					
+	<!--<div class="plainte-examen"><u>Personne mise en examen</u> : {{p.accuse}}<br><u>Chefs d'accusation</u> : {{p.accusation}}<br><u>Déclaration</u> : {{p.declaration}}</div>-->
+				
+			<div>
+			{% if to_print != 1 and p.date_de_classement %}
+				{% if p.presente_au_ce %}
+					<input type="checkbox" name="presenteauce{{i}}" value="{{p.numero}}" checked /> Présenté au CE
+				{% else %}
+					<input type="checkbox" name="presenteauce{{i}}" value="{{p.numero}}" /> Présenté au CE
+				{% endif %}
+			{% endif %}
+			</div>
+</div>
+
+<script>
+		$(function() {
+			{% if p.accuse and p.accuse != "-" %}
+			{% set accuse_lst = p.accuse.split("|") %}
+				{% if p.accusation and p.declaration and p.sanction %}
+					{% for nom in accuse_lst %}
+						{% set accusation_lst = p.accusation.split("|") %}
+						{% set acc_lst = accusation_lst[loop.index0].split("£") %}
+						{% for n in acc_lst %}
+   			describe(String(document.getElementById("accnr{{i}}-{{nom}}-{{n}}").innerHTML), "acctitlebox{{i}}-{{nom}}-{{n}}"); //this calls it on load
+   						{% endfor %}
+   					{% endfor %}
+   				{% endif %}
+   			{% endif %}
+		});
+	</script>

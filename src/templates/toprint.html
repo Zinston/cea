@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<title>
+  		Ecole Autonome - 
+  			{% block titre %}
+			{% endblock %}
+  	</title>
+  	
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<!--<link href="http://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type="text/css">
+	<link href="http://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css">-->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+</head>
+
+<body class="toprint" onload="window.print();">
+	<div class="container">
+	
+		<h1>
+			{{ self.titre() }}
+		</h1>
+		<br><br>
+
+  		<div id="content">
+  			{% block content %}
+  			{% endblock %}
+  		</div>
+  		
+  	</div>
+  	
+	<!-- Iterate through JSON to match rules numbers with rules titles -->
+	<script>
+		function describe(acc, box, nrdisplayed = true) {
+			console.log("describe("+acc+","+box+","+nrdisplayed+")");
+			var htmlText = "";
+			
+			if (Object.prototype.toString.call(acc) == '[object Array]') {
+				for (var i = 0; i < acc.length; i++) {
+					console.log("acc["+i+"] = "+acc[i]);
+					htmlToAdd = describeThroughJSONArray(acc[i], nrdisplayed, htmlText);
+					htmlText += htmlToAdd;
+					if (i+1 < acc.length) {htmlText += "<br>"}
+				}
+			}
+			else {
+				htmlToAdd = describeThroughJSONArray(acc, nrdisplayed);
+				htmlText = htmlToAdd;
+			}
+			
+			document.getElementById(box).innerHTML = htmlText;
+		};
+		
+		function describeThroughJSONArray(acc, nrdisplayed) {
+			var htmltoAdd = "";
+			
+			var json = function(){
+    			var returnVal;
+
+    			$.ajax({
+        			dataType: "json",
+        			url: "/apps/cea/json",
+        			async: false,
+        			success: function(data) {
+            			returnVal = data;
+        			}
+    			});
+    			return returnVal;
+			}();
+			
+			return findAccs(json);
+			
+			function findAccs(json) {
+				htmlToAdd = "";
+				sortJsonArrayByProperty(json, 'nr');
+				jsonLength = Object.keys(json).length;
+				
+				for (var j = 0; j < jsonLength; j++) {
+					var obj = json[j];
+					if (obj.nr == acc) {
+						if (nrdisplayed == false) {htmlToAdd = obj.nr};
+						htmlToAdd += "&nbsp;&nbsp;&nbsp;" + obj.titre;
+	       				console.log("ARRAY nr = " + obj.nr + " - titre = " + obj.titre);
+						console.log("htmlToAdd : " + htmlToAdd);
+	       				break;
+					}
+				}
+				return htmlToAdd;
+			};
+		};
+		
+		function sortJsonArrayByProperty(objArray, prop, direction){
+    		if (arguments.length<2) throw new Error("sortJsonArrayByProp requires 2 arguments");
+    		var direct = arguments.length>2 ? arguments[2] : 1; //Default to ascending
+
+   			if (objArray && objArray.constructor===Array){
+        		var propPath = (prop.constructor===Array) ? prop : prop.split(".");
+        		objArray.sort(function(a,b){
+            		for (var p in propPath){
+                		if (a[propPath[p]] && b[propPath[p]]){
+                    		a = a[propPath[p]];
+                    		b = b[propPath[p]];
+                		}
+            		}
+            // convert numeric strings to integers
+            		a = a.match(/^\d+$/) ? +a : a;
+            		b = b.match(/^\d+$/) ? +b : b;
+            		return ( (a < b) ? -1*direct : ((a > b) ? 1*direct : 0) );
+        		});
+    		}
+		}
+	</script>
+
+</body>
+
+</html>

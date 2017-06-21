@@ -1,0 +1,229 @@
+{% extends "cea-base.html" %}
+
+{% block jumbotron %}
+	{% if not examen and not accuse %}
+	<h1>Nouvelle plainte</h1>
+	<p class="lead">Encodez ici une nouvelle plainte.
+		{% if lastnumero %}
+	<br><em><small>La dernière plainte reçue était numérotée {{lastnumero}}.</small></em>
+		{% endif %}
+	</p>
+	{% elif numero %}
+	<h1>Plainte #{{numero}}</h1>
+	<p class="lead">Le rapport approuvé, vous arbitrez maintenant la plainte #{{numero}}.</p>
+	{% endif %}
+{% endblock %}
+
+
+
+{% block communication %}
+{{commu}}
+{% endblock %}
+
+
+
+{% block content %}
+
+    <form method="post">
+
+<!--  ------  -->    
+<!-- | TABS | -->
+<!--  ------  -->
+
+    	<ul class="nav nav-tabs">
+  		{% if new %}<li class="active">{% else %}<li>{% endif %}<a data-toggle="tab" href="#rapport">Rapport</a></li>
+{% if accuse and accuse[0] != "-" and accuse[0] %}
+	{% for a in accuse %}
+	 {% set i = loop.index %}
+  		<li><a data-toggle="tab" href="#examen{{i}}">{{a}}</a></li>
+  	{% endfor %}
+{% endif %}
+{% if examen %}	
+  		<li class="active"><a data-toggle="tab" href="#examen">Nouvelle mise en examen</a></li>
+{% endif %}
+  		</ul>
+
+<!--  --------------  -->
+<!-- | Tabs CONTENT | -->
+<!--  --------------  -->
+
+
+<!-- | RAPPORT | -->
+  		
+  		<div class="tab-content">
+  			<br>
+    		{% if new %}<div id="rapport" class="tab-pane fade in active">{% else %}<div id="rapport" class="tab-pane fade in">{% endif %}
+				<label>
+					<div>Numéro de la plainte</div>
+{% if numero %}
+					<div>{{numero}}</div>
+					<input type="hidden" name="numero" value="{{numero[-4:]}}" />
+{% else %}
+					<input type="number" name="numero"></input>
+{% endif %}
+				</label>
+				<br>
+		
+				<label>
+					<div>Rapport du CEA</div>
+					<textarea id="rapport" name="rapport" onkeyup="valid(this)" onblur="valid(this)">{{rapport}}</textarea>
+				</label>
+				<br>
+			</div>
+
+
+<!-- | MISES EN EXAMEN | -->
+		
+		<!--{% set j = 1 %}-->
+{% if accuse and accuse[0] != "-" and accuse[0] %}
+	{% for a in accuse %}
+		{% set i = loop.index0 %}
+			<div id="examen{{i+1}}" class="tab-pane fade in">
+				<label>
+					<div>Personne mise en examen</div>
+					<select name="accuse{{i}}">
+						<option value="-"></option>
+			{% for membre in membres_lst %}
+				{% if membre == a %}
+		  				<option value="{{membre}}" selected>{{membre}}</option>
+		  		{% else %}
+		  				<option value="{{membre}}">{{membre}}</option>
+		  		{% endif %}
+  			{% endfor %}
+					</select>
+				</label>
+				<br>
+			
+				<label>
+					<div>Chefs d'accusation</div>
+					<select multiple name="accusation{{i}}" id="selectedaccusations{{i}}">
+					{% set acc = accusation[i].split('£') %}
+					{% for regle in regles %}
+							{% if regle.nr in acc %}
+						<option value="{{regle.nr}}" selected>{{regle.nr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{regle.titre}}</option>
+							{% else %}
+						<option value="{{regle.nr}}">{{regle.nr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{regle.titre}}</option>
+							{% endif %}
+					{% endfor %}
+					</select>
+				</label>
+				<div id="selectedaccusationsbox{{i}}"></div>
+				<br>
+		
+				<label>
+					<div>Déclaration</div>
+			{% if declaration[i] == "R" %}
+					<input type="radio" name="declaration{{i}}" value="R" checked>&nbsp;R&nbsp;</input>
+					<input type="radio" name="declaration{{i}}" value="N">&nbsp;N&nbsp;</input>
+			{% else %}
+					<input type="radio" name="declaration{{i}}" value="R">&nbsp;R&nbsp;</input>
+					<input type="radio" name="declaration{{i}}" value="N" checked>&nbsp;N&nbsp;</input>
+			{% endif %}
+				</label>
+				<br>
+			
+				<label>
+					<div>Sanction</div>
+					<textarea name="sanction{{i}}" onkeyup="valid(this)" onblur="valid(this)">{{sanction[i]}}</textarea>
+				</label>
+				<br>
+				
+				<label>
+					<input type="submit" name="supprimer{{i}}" value="Supprimer la mise en examen"></input>
+				</label>
+				<br>
+			</div>
+			<!--{% set j = j+1 %}-->
+		{% endfor %}
+	{% endif %}
+			
+	
+<!-- | NOUVELLE MISE EN EXAMEN | -->	
+			
+	{% if examen %}	
+			<div id="examen" class="tab-pane fade in active">
+				<label>
+					<div>Personne mise en examen</div>
+					<select name="accuse">
+						<option value="-"></option>
+		{% for membre in membres_lst %}
+  						<option value="{{membre}}">{{membre}}</option>
+  		{% endfor %}
+					</select>
+				</label>
+				<br>
+			
+				<label>
+					<div>Chefs d'accusation</div>
+					<select multiple name="accusation" id="selectedaccusations">
+					{% for regle in regles %}
+						<option value="{{regle.nr}}">{{regle.nr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{regle.titre}}</option>
+					{% endfor %}
+					</select>
+				</label>
+				<div id="selectedaccusationsbox"></div>
+				<br>
+		
+				<label>
+					<div>Déclaration</div>
+					<input type="radio" name="declaration" value="R">&nbsp;R&nbsp;</input>
+					<input type="radio" name="declaration" value="N">&nbsp;N&nbsp;</input>
+				</label>
+				<br>
+			
+				<label>
+					<div>Sanction</div>
+					<textarea name="sanction" onkeyup="valid(this)" onblur="valid(this)"></textarea>
+				</label>
+				<br>
+				
+				<label>
+					<input type="submit" name="supprimernew" value="Supprimer la mise en examen"></input>
+				</label>
+				<br>
+			</div>
+		</div>
+	{% endif %}
+		
+		<div class="error">{{error}}</div>
+		
+		<input type="submit" name="sauver" value="Sauver">
+		<input type="submit" name="examen" value="Mettre en examen">
+   		<input type="submit" name="classer" value="Classer">
+	
+	</form>
+	
+	<script>
+		$(function() {
+		
+   			$('#selectedaccusations').change(function() {
+   				describe($(this).val(), "selectedaccusationsbox", false);
+		    }); 
+		    
+		{% if accuse and accuse[0] != "-" and accuse[0] %}
+		{% for a in accuse %}
+		{% set i = loop.index0 %}
+    		describe(getSelectValues(document.getElementById("selectedaccusations{{i}}")), "selectedaccusationsbox{{i}}", false); //this calls it on load
+   			$('#selectedaccusations{{i}}').change(function() {
+   				describe($(this).val(), "selectedaccusationsbox{{i}}", false);
+		    });
+   		{% endfor %}
+   		{% endif %}
+		});
+		
+		function getSelectValues(select) {
+  			var result = [];
+  			var options = select && select.options;
+  			var opt;
+
+  			for (var i=0, iLen=options.length; i<iLen; i++) {
+    			opt = options[i];
+
+    			if (opt.selected) {
+      				result.push(opt.value || opt.text);
+    			}
+  			}
+  			return result;
+		}
+	</script>
+{% endblock %}

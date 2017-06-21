@@ -1,0 +1,31 @@
+{% if to_print %}
+	{% extends "toprint.html" %}
+{% else %}
+	{% extends "cea-base.html" %}
+{% endif %}
+
+{% block titre %}
+	{{titre}}
+{% endblock %}
+
+{% block jumbotron %}
+
+		<h1>{{titre}}</h1>
+      	<!--<a class="btn btn-primary btn-lg btn-block">Big ASS Learn more button</a>-->
+
+{% endblock %}
+
+{% block content %}
+  {% if r %}
+	{{ r.render() | safe }}
+    <br><br>
+  {% endif %}
+
+{% set i = 0 %}
+  {% for p in plaintes_lst %}
+    {{ p.render(i=i) | safe }}
+    <br><br>
+    {% set i = i+1 %}
+  {% endfor %}
+
+{% endblock %}
