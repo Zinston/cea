@@ -6,7 +6,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   	
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet" media="screen">
     
 </head>
@@ -25,7 +25,7 @@
                 	<span class="sr-only">Toggle Navigation</span>
 	                <span class="fa fa-chevron-down"></span> <b>Menu</b>
     	        </button>
-        	    <a class="navbar-brand" href="#"><img src="/images/newlogo.png" class="navbar-brand"></a>
+        	    <a class="navbar-brand" href="/"><img src="/images/newlogo.png" class="navbar-brand"></a>
 	        </div>
     	    <div class="collapse navbar-collapse" id="navCollapse">
         	    <ul class="nav nav-pills pull-right">
@@ -39,6 +39,12 @@
 		    				<li><a href="http://docs.ecole-autonome.be/manman/Manuel_de_Gestion.pdf" target="_blank">Manuel de gestion</a></li>
         				</ul>
       				</li>
+      				<li>
+      					<a href="nouveaumembre"><span class="fa fa-user"></span></a>
+      				</li>
+      				<li>
+      					<a href="nouvelleregle"><span class="fa fa-legal"></span></a>
+      				</li>
 		  		</ul>
 	        </div>
     	</div>
@@ -49,11 +55,11 @@
   					{% block jumbotron %}
   					{% endblock %}
   					<br/><br/>
-  					<p align="center"><a href="/nouvelleplainte"><img src="/images/add.png"></a>
+  					<p align="center"><a href="/nouvelleplainte"><span class="fa fa-plus"></span></a>
   					&nbsp;&nbsp;&nbsp;&nbsp;
-  					<a href="/encours"><img src="/images/workinprogress.png" hspace="10"></a>
+  					<a href="/encours"><span class="fa fa-spinner" hspace="10"></span></a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-  					<a href="/recherche"><img src="/images/search.png"></a></p>
+  					<a href="/recherche"><span class="fa fa-search"></span></a></p>
   			</div>
   		</div></div>
 

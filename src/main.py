@@ -310,7 +310,7 @@ class NouveauMembre(Handler):
         if nom and prenom:
             self.add(nom, prenom)
             commu = prenom + " " + nom
-            commu += u" a été ajouté(e) à la liste"
+            commu += u" a été ajouté(e) à la liste "
             commu += "des membres de l'Ecole Autonome."
             self.render("cea.html", commu=commu)
         else:
@@ -949,7 +949,7 @@ class Reglement(Handler):
         regles = db.GqlQuery("select * from Regle order by nrdec asc")
         self.render('reglement.html', regles=regles)
 
-app = webapp2.WSGIApplication([('/', MainPage),
+app = webapp2.WSGIApplication([('/?', MainPage),
                                ('/([0-9]+)/?', PlaintePage),
                                ('/recherche/?', RecherchePage),
                                ('/nouvelleplainte/?', NouvellePlainte),
