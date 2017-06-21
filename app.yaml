@@ -24,7 +24,7 @@ handlers:
 - url: /images
   static_dir: src/static/images
   
-- url: /
+- url: /.*
   script: src.main.app
   login: admin
 
