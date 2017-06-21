@@ -32,4 +32,4 @@ _CEA_ (working title) is a tool for [Sudbury schools](https://en.wikipedia.org/w
 _CEA_ was developed by one of the founders of [Ecole Autonome](http://www.ecole-autonome.be), who learned to program as he went, to automize some of his work as both Judicial Committee Clerk and School Meeting Secretary. It was used throughout the school's one-year existence.
 
 ## License
-_CEA_ is released under the [MIT License](cea/LICENSE.txt).
+_CEA_ is released under the [GNU General Public License v3.0](cea/LICENSE.txt).
